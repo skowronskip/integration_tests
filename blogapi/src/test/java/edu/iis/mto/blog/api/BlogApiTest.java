@@ -62,6 +62,11 @@ public class BlogApiTest {
           .accept(MediaType.APPLICATION_JSON_UTF8).content(content)).andExpect(status().isConflict());
     }
 
+    @Test
+    public void getNotExistingUserShouldResponseWith404() throws Exception {
+        mvc.perform(post("/blog/user/id/{id}", 999)).andExpect(status().isNotFound());
+    }
+
     private String writeJson(Object obj) throws JsonProcessingException {
         return new ObjectMapper().writer().writeValueAsString(obj);
     }
