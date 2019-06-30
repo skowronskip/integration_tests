@@ -27,4 +27,20 @@ public class FindUsersTest extends FunctionalTests {
                    .when()
                    .get(USER_API);
     }
+
+    @Test
+    public void getShouldNotReturnRemovedUsers() {
+        RestAssured.given()
+                  .accept(ContentType.JSON)
+                  .header("Content-Type", "application/json;charset=UTF-8")
+                  .param("searchString", "Removed")
+                  .expect()
+                  .log()
+                  .all()
+                  .statusCode(HttpStatus.SC_OK)
+                  .and()
+                  .body("size", is(0))
+                  .when()
+                  .get(USER_API);
+    }
 }
