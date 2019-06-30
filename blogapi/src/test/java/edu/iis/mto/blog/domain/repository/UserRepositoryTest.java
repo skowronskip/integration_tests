@@ -78,4 +78,12 @@ public class UserRepositoryTest {
         Assert.assertThat(users, Matchers.contains(persistedUser));
     }
 
+    @Test
+    public void shouldFindUserByEmail() {
+        User persistedUser = entityManager.persist(user);
+        List<User> users = repository.findByFirstNameContainingOrLastNameContainingOrEmailContainingAllIgnoreCase("test", "test", persistedUser.getEmail());
+
+        Assert.assertThat(users, Matchers.contains(persistedUser));
+    }
+
 }
