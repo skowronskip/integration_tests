@@ -35,4 +35,17 @@ public class LikePostTest extends FunctionalTests {
           .when()
           .post(LIKE_API, 3, 1);
     }
+
+    @Test
+    public void likePostByAuthorPostShouldReturnBadRequest() {
+        RestAssured.given()
+          .accept(ContentType.JSON)
+          .header("Content-Type", "application/json;charset=UTF-8")
+          .expect()
+          .log()
+          .all()
+          .statusCode(HttpStatus.SC_BAD_REQUEST)
+          .when()
+          .post(LIKE_API, 1, 1);
+    }
 }
