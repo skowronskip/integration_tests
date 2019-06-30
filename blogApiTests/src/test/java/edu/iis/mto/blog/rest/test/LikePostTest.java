@@ -12,16 +12,27 @@ public class LikePostTest extends FunctionalTests {
 
     @Test
     public void likePostByUnconfirmedUserShouldReturnForbidden() {
-        JSONObject jsonObj = new JSONObject().put("entry", "test");
         RestAssured.given()
                    .accept(ContentType.JSON)
                    .header("Content-Type", "application/json;charset=UTF-8")
-                   .body(jsonObj.toString())
                    .expect()
                    .log()
                    .all()
                    .statusCode(HttpStatus.SC_FORBIDDEN)
                    .when()
                    .post(LIKE_API, 2, 1);
+    }
+
+    @Test
+    public void likePostByConfirmedUserShouldReturnOK() {
+        RestAssured.given()
+          .accept(ContentType.JSON)
+          .header("Content-Type", "application/json;charset=UTF-8")
+          .expect()
+          .log()
+          .all()
+          .statusCode(HttpStatus.SC_OK)
+          .when()
+          .post(LIKE_API, 3, 1);
     }
 }
