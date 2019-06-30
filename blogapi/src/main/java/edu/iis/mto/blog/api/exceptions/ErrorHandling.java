@@ -28,6 +28,10 @@ public class ErrorHandling {
     @ExceptionHandler(DomainError.class)
     public void domainError(DomainError exc, HttpServletResponse response) throws IOException {
         LOGGER.error(exc.getMessage());
+        if (exc.getMessage().equals(DomainError.UNCONFIRMED_USER)) {
+            response.sendError(HttpStatus.FORBIDDEN.value(), exc.getMessage());
+            return;
+        }
         response.sendError(HttpStatus.BAD_REQUEST.value(), exc.getMessage());
     }
 
