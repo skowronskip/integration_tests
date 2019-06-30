@@ -16,6 +16,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import edu.iis.mto.blog.domain.model.AccountStatus;
 import edu.iis.mto.blog.domain.model.User;
 
+import static org.hamcrest.Matchers.is;
+
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class UserRepositoryTest {
@@ -84,6 +86,14 @@ public class UserRepositoryTest {
         List<User> users = repository.findByFirstNameContainingOrLastNameContainingOrEmailContainingAllIgnoreCase("test", "test", persistedUser.getEmail());
 
         Assert.assertThat(users, Matchers.contains(persistedUser));
+    }
+
+    @Test
+    public void shouldNotFindAnyUserWithInvalidQuery() {
+        User persistedUser = entityManager.persist(user);
+        List<User> users = repository.findByFirstNameContainingOrLastNameContainingOrEmailContainingAllIgnoreCase("test", "test", "test");
+
+        Assert.assertThat(users.size(), is(0));
     }
 
 }
