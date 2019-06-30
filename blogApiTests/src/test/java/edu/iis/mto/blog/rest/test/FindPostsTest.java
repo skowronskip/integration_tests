@@ -21,4 +21,17 @@ public class FindPostsTest extends FunctionalTests {
                    .when()
                    .get(FIND_API, 1);
     }
+
+    @Test
+    public void getPostOfRemovedUserShouldReturnBadRequest() {
+        RestAssured.given()
+                  .accept(ContentType.JSON)
+                  .header("Content-Type", "application/json;charset=UTF-8")
+                  .expect()
+                  .log()
+                  .all()
+                  .statusCode(HttpStatus.SC_BAD_REQUEST)
+                  .when()
+                  .get(FIND_API, 4);
+    }
 }

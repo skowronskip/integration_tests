@@ -4,6 +4,7 @@ public class DomainError extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
+    public static final String REMOVED_USER = "removed user";
     public static final String UNCONFIRMED_USER = "unconfirmed user";
     public static final String USER_NOT_FOUND = "unknown user";
     public static final String POST_NOT_FOUND = "unknown post";
