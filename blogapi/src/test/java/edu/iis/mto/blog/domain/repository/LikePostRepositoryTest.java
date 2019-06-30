@@ -15,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 
@@ -73,5 +74,15 @@ public class LikePostRepositoryTest {
         LikePost persistedLIkePost = repository.save(likePost);
 
         Assert.assertThat(persistedLIkePost.getId(), Matchers.notNullValue());
+    }
+
+    @Test
+    public void shouldFindByUserAndBlogPost() {
+        LikePost persistedLikePost = entityManager.persist(likePost);
+        LikePost likePost = repository.findByUserAndPost(user, blogPost).orElse(null);
+
+        Assert.assertThat(likePost, Matchers.notNullValue());
+        Assert.assertThat(likePost.getPost(), Matchers.equalTo(persistedLikePost.getPost()));
+        Assert.assertThat(likePost.getUser(), Matchers.equalTo(persistedLikePost.getUser()));
     }
 }
